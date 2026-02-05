@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: week-16-app-deployment
+  labels:
+    app: api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: api
+  template:
+    metadata:
+      labels:
+        app: api
+    spec:
+      containers:
+      - name: week-16-app-api-pod
+        image: yakov234/week_16_app-api:v1
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8000
+
+        env:
+        - name: MONGODB_URL
+          value: "mongodb://admin:secretpass@mongo:27017/production?authSource=admin"
+
+        - name: DATABASE_NAME
+          value: "production"
+
